@@ -6,6 +6,7 @@ struct HomeView: View {
     @State private var showSettings = false
     @State private var selectedStory: Story?
     @State private var bookmarkedStoryIDs: Set<String> = []
+    @State private var readStoryIDs: Set<String> = []
 
     var body: some View {
         NavigationStack {
@@ -68,7 +69,7 @@ struct HomeView: View {
                             StoryCardView(
                                 story: story,
                                 issueDate: issue.metadata.weekEnd,
-                                isRead: vm.isRead(storyId: story.id),
+                                isRead: readStoryIDs.contains(story.id),
                                 isBookmarked: Binding(
                                     get: { bookmarkedStoryIDs.contains(story.id) },
                                     set: { newValue in
@@ -166,9 +167,7 @@ struct HomeView: View {
     }
 
     private func syncBookmarkedIDs() {
-        guard let stories = viewModel?.currentIssue?.stories else { return }
-        bookmarkedStoryIDs = Set(
-            stories.map(\.id).filter { repository.cache.isBookmarked(storyId: $0) }
-        )
+        bookmarkedStoryIDs = repository.cache.allBookmarkedStoryIDs()
+        readStoryIDs = repository.cache.allReadStoryIDs()
     }
 }

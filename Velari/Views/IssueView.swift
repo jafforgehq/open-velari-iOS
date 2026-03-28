@@ -9,6 +9,7 @@ struct IssueView: View {
     @State private var selectedCategory: StoryCategory?
     @State private var selectedStory: Story?
     @State private var bookmarkedStoryIDs: Set<String> = []
+    @State private var readStoryIDs: Set<String> = []
 
     private var filteredStories: [Story] {
         guard let stories = issue?.stories else { return [] }
@@ -79,7 +80,7 @@ struct IssueView: View {
                                 StoryCardView(
                                     story: story,
                                     issueDate: issue.metadata.weekEnd,
-                                    isRead: repository.cache.isRead(storyId: story.id),
+                                    isRead: readStoryIDs.contains(story.id),
                                     isBookmarked: Binding(
                                         get: { bookmarkedStoryIDs.contains(story.id) },
                                         set: { newValue in
@@ -129,9 +130,7 @@ struct IssueView: View {
     }
 
     private func syncBookmarkedIDs() {
-        guard let stories = issue?.stories else { return }
-        bookmarkedStoryIDs = Set(
-            stories.map(\.id).filter { repository.cache.isBookmarked(storyId: $0) }
-        )
+        bookmarkedStoryIDs = repository.cache.allBookmarkedStoryIDs()
+        readStoryIDs = repository.cache.allReadStoryIDs()
     }
 }

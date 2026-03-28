@@ -105,16 +105,20 @@ final class CacheService {
             sortBy: [SortDescriptor(\.cachedAt, order: .reverse)]
         )
         descriptor.fetchLimit = 1
-        guard let cached = try? modelContext.fetch(descriptor).first else { return nil }
-        return try? decoder.decode(Issue.self, from: cached.issueData)
+        guard let data = try? modelContext.fetch(descriptor).first?.issueData else { return nil }
+        return decodeIssue(from: data)
     }
 
     func loadIssue(date: String) -> Issue? {
         let descriptor = FetchDescriptor<CachedIssue>(
             predicate: #Predicate { $0.issueDate == date }
         )
-        guard let cached = try? modelContext.fetch(descriptor).first else { return nil }
-        return try? decoder.decode(Issue.self, from: cached.issueData)
+        guard let data = try? modelContext.fetch(descriptor).first?.issueData else { return nil }
+        return decodeIssue(from: data)
+    }
+
+    private func decodeIssue(from data: Data) -> Issue? {
+        try? decoder.decode(Issue.self, from: data)
     }
 
     func latestGeneratedDate() -> String? {
@@ -152,6 +156,12 @@ final class CacheService {
             predicate: #Predicate { $0.storyId == storyId }
         )
         return (try? modelContext.fetchCount(descriptor)) ?? 0 > 0
+    }
+
+    func allBookmarkedStoryIDs() -> Set<String> {
+        let descriptor = FetchDescriptor<BookmarkedStory>()
+        guard let bookmarks = try? modelContext.fetch(descriptor) else { return [] }
+        return Set(bookmarks.map(\.storyId))
     }
 
     func allBookmarks() -> [(story: Story, issueDate: String)] {
@@ -195,6 +205,12 @@ final class CacheService {
             predicate: #Predicate { $0.storyId == storyId }
         )
         return (try? modelContext.fetchCount(descriptor)) ?? 0 > 0
+    }
+
+    func allReadStoryIDs() -> Set<String> {
+        let descriptor = FetchDescriptor<ReadStoryRecord>()
+        guard let records = try? modelContext.fetch(descriptor) else { return [] }
+        return Set(records.map(\.storyId))
     }
 
     func clearReadingHistory() {
