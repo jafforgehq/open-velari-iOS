@@ -86,18 +86,18 @@ struct HomeView: View {
                             )
                         }
                     }
-                    .navigationDestination(item: $selectedStory) { story in
-                        StoryDetailView(
-                            story: story,
-                            issueDate: issue.metadata.weekEnd,
-                            modelUsed: issue.metadata.modelUsed,
-                            cache: repository.cache
-                        )
-                    }
                     .padding(.horizontal)
                     .padding(.top, 12)
                     .padding(.bottom, 20)
                 }
+            }
+            .navigationDestination(item: $selectedStory) { story in
+                StoryDetailView(
+                    story: story,
+                    issueDate: issue.metadata.weekEnd,
+                    modelUsed: issue.metadata.modelUsed,
+                    cache: repository.cache
+                )
             }
             .refreshable {
                 await vm.refresh()

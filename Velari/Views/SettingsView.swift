@@ -14,7 +14,6 @@ struct SettingsView: View {
                 appearanceSection
                 notificationsSection
                 dataSection
-                tipJarSection
                 aboutSection
             }
             .navigationTitle("Settings")
@@ -130,12 +129,6 @@ struct SettingsView: View {
         }
     }
 
-    private var tipJarSection: some View {
-        Section {
-            TipJarView()
-        }
-    }
-
     private var aboutSection: some View {
         Section("About") {
             HStack {
@@ -144,12 +137,6 @@ struct SettingsView: View {
                 Text(viewModel?.appVersion ?? "1.0")
                     .foregroundStyle(.secondary)
             }
-
-            Text("Velari - AI News Digest")
-                .foregroundStyle(.secondary)
-
-            Text("Powered by OpenVelari")
-                .foregroundStyle(.secondary)
 
             Link("View on GitHub", destination: URL(string: "https://github.com/jafforgehq/openvelari")!)
 
