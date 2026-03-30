@@ -14,7 +14,7 @@ struct IssueMetadata: Codable, Hashable, Sendable {
     let totalSourcesConsulted: Int
     let id: String
     let issueNumber: Int
-    let isPreview: Bool
+    let isPreview: Bool?
     let totalStories: Int
     let modelUsed: String
 }

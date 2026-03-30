@@ -64,7 +64,7 @@ struct ArchiveView: View {
 
                 Spacer()
 
-                Text(issue.isPreview ? "Preview" : "Issue #\(issue.issueNumber)")
+                Text((issue.isPreview ?? false) ? "Preview" : "Issue #\(issue.issueNumber)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

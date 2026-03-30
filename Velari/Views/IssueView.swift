@@ -119,7 +119,7 @@ struct IssueView: View {
                 )
             }
         }
-        .navigationTitle(archiveIssue.isPreview ? "Preview" : "Issue #\(archiveIssue.issueNumber)")
+        .navigationTitle((archiveIssue.isPreview ?? false) ? "Preview" : "Issue #\(archiveIssue.issueNumber)")
         .navigationBarTitleDisplayMode(.inline)
         .task {
             let date = archiveIssue.date

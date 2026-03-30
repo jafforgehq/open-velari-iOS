@@ -13,5 +13,5 @@ struct ArchiveIssue: Codable, Identifiable, Hashable, Sendable {
     let totalStories: Int
     let file: String
     let highlights: [String]
-    let isPreview: Bool
+    let isPreview: Bool?
 }
