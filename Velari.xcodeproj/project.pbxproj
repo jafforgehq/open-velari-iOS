@@ -6,6 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BD2D73DD2F80FC1D00F6DECC /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD2D73DC2F80FC1C00F6DECC /* WidgetKit.framework */; };
+		BD2D73DF2F80FC1D00F6DECC /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD2D73DE2F80FC1D00F6DECC /* SwiftUI.framework */; };
+		BD2D73EA2F80FC1E00F6DECC /* VelariWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BD2D73DA2F80FC1C00F6DECC /* VelariWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BD2D73F12F81009D00F6DECC /* WidgetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2D73F02F81009D00F6DECC /* WidgetData.swift */; };
+		BD2D73F22F81009D00F6DECC /* WidgetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2D73F02F81009D00F6DECC /* WidgetData.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		BD1CE7A12F76EAC800AE3276 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -14,12 +22,48 @@
 			remoteGlobalIDString = BD0CE7DF2F76EAC800AE3276;
 			remoteInfo = Velari;
 		};
+		BD2D73E82F80FC1E00F6DECC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD0CE7D82F76EAC800AE3276 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BD2D73D92F80FC1C00F6DECC;
+			remoteInfo = VelariWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BD2D73EB2F80FC1E00F6DECC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BD2D73EA2F80FC1E00F6DECC /* VelariWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		BD0CE7E02F76EAC800AE3276 /* Velari.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Velari.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD1CE7A02F76EAC800AE3276 /* VelariTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VelariTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD2D73DA2F80FC1C00F6DECC /* VelariWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = VelariWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD2D73DC2F80FC1C00F6DECC /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		BD2D73DE2F80FC1D00F6DECC /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		BD2D73F02F81009D00F6DECC /* WidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetData.swift; sourceTree = "<group>"; };
+		BD2D73F42F8100C900F6DECC /* VelariWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VelariWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BD2D73EE2F80FC1E00F6DECC /* Exceptions for "VelariWidget" folder in "VelariWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BD2D73D92F80FC1C00F6DECC /* VelariWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BD0CE7E22F76EAC800AE3276 /* Velari */ = {
@@ -30,6 +74,14 @@
 		BD1CE7A22F76EAC800AE3276 /* VelariTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = VelariTests;
+			sourceTree = "<group>";
+		};
+		BD2D73E02F80FC1D00F6DECC /* VelariWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				BD2D73EE2F80FC1E00F6DECC /* Exceptions for "VelariWidget" folder in "VelariWidgetExtension" target */,
+			);
+			path = VelariWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -49,14 +101,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BD2D73D72F80FC1C00F6DECC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD2D73DF2F80FC1D00F6DECC /* SwiftUI.framework in Frameworks */,
+				BD2D73DD2F80FC1D00F6DECC /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		BD0CE7D72F76EAC800AE3276 = {
 			isa = PBXGroup;
 			children = (
+				BD2D73F42F8100C900F6DECC /* VelariWidgetExtension.entitlements */,
+				BD2D73F02F81009D00F6DECC /* WidgetData.swift */,
 				BD0CE7E22F76EAC800AE3276 /* Velari */,
 				BD1CE7A22F76EAC800AE3276 /* VelariTests */,
+				BD2D73E02F80FC1D00F6DECC /* VelariWidget */,
+				BD2D73DB2F80FC1C00F6DECC /* Frameworks */,
 				BD0CE7E12F76EAC800AE3276 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -66,8 +131,18 @@
 			children = (
 				BD0CE7E02F76EAC800AE3276 /* Velari.app */,
 				BD1CE7A02F76EAC800AE3276 /* VelariTests.xctest */,
+				BD2D73DA2F80FC1C00F6DECC /* VelariWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		BD2D73DB2F80FC1C00F6DECC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BD2D73DC2F80FC1C00F6DECC /* WidgetKit.framework */,
+				BD2D73DE2F80FC1D00F6DECC /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,10 +155,12 @@
 				BD0CE7DC2F76EAC800AE3276 /* Sources */,
 				BD0CE7DD2F76EAC800AE3276 /* Frameworks */,
 				BD0CE7DE2F76EAC800AE3276 /* Resources */,
+				BD2D73EB2F80FC1E00F6DECC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BD2D73E92F80FC1E00F6DECC /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				BD0CE7E22F76EAC800AE3276 /* Velari */,
@@ -116,6 +193,28 @@
 			productReference = BD1CE7A02F76EAC800AE3276 /* VelariTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		BD2D73D92F80FC1C00F6DECC /* VelariWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BD2D73EF2F80FC1E00F6DECC /* Build configuration list for PBXNativeTarget "VelariWidgetExtension" */;
+			buildPhases = (
+				BD2D73D62F80FC1C00F6DECC /* Sources */,
+				BD2D73D72F80FC1C00F6DECC /* Frameworks */,
+				BD2D73D82F80FC1C00F6DECC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				BD2D73E02F80FC1D00F6DECC /* VelariWidget */,
+			);
+			name = VelariWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = VelariWidgetExtension;
+			productReference = BD2D73DA2F80FC1C00F6DECC /* VelariWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -132,6 +231,9 @@
 					BD1CE7A42F76EAC800AE3276 = {
 						CreatedOnToolsVersion = 26.4;
 						TestTargetID = BD0CE7DF2F76EAC800AE3276;
+					};
+					BD2D73D92F80FC1C00F6DECC = {
+						CreatedOnToolsVersion = 26.4;
 					};
 				};
 			};
@@ -151,6 +253,7 @@
 			targets = (
 				BD0CE7DF2F76EAC800AE3276 /* Velari */,
 				BD1CE7A42F76EAC800AE3276 /* VelariTests */,
+				BD2D73D92F80FC1C00F6DECC /* VelariWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -170,6 +273,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BD2D73D82F80FC1C00F6DECC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -177,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD2D73F12F81009D00F6DECC /* WidgetData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +298,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BD2D73D62F80FC1C00F6DECC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD2D73F22F81009D00F6DECC /* WidgetData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -194,6 +313,11 @@
 			isa = PBXTargetDependency;
 			target = BD0CE7DF2F76EAC800AE3276 /* Velari */;
 			targetProxy = BD1CE7A12F76EAC800AE3276 /* PBXContainerItemProxy */;
+		};
+		BD2D73E92F80FC1E00F6DECC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BD2D73D92F80FC1C00F6DECC /* VelariWidgetExtension */;
+			targetProxy = BD2D73E82F80FC1E00F6DECC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -324,8 +448,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Velari/Velari.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = R9QFVTDHY5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -360,8 +485,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Velari/Velari.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = R9QFVTDHY5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -435,6 +561,70 @@
 			};
 			name = Release;
 		};
+		BD2D73EC2F80FC1E00F6DECC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = VelariWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R9QFVTDHY5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VelariWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VelariWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jafforge.Velari.VelariWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BD2D73ED2F80FC1E00F6DECC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = VelariWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = R9QFVTDHY5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VelariWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VelariWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jafforge.Velari.VelariWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -461,6 +651,15 @@
 			buildConfigurations = (
 				BD1CE7A82F76EAC900AE3276 /* Debug */,
 				BD1CE7A92F76EAC900AE3276 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BD2D73EF2F80FC1E00F6DECC /* Build configuration list for PBXNativeTarget "VelariWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD2D73EC2F80FC1E00F6DECC /* Debug */,
+				BD2D73ED2F80FC1E00F6DECC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,4 +1,5 @@
 import Foundation
+import WidgetKit
 
 @Observable
 final class DigestRepository {
@@ -15,6 +16,7 @@ final class DigestRepository {
 
     func loadLatestIssue() async -> Issue? {
         if let cached = cache.loadLatestIssue() {
+            updateWidgetData(cached)
             Task {
                 await refreshLatestIfNeeded(currentDate: cached.metadata.generatedDate)
             }
@@ -93,11 +95,40 @@ final class DigestRepository {
         do {
             let issue = try await NetworkService.fetchLatestIssue()
             cache.saveIssue(issue)
+            updateWidgetData(issue)
             error = nil
             return issue
         } catch {
             self.error = error.localizedDescription
             return nil
         }
+    }
+
+    // MARK: - Widget
+
+    private func updateWidgetData(_ issue: Issue) {
+        let stories = issue.stories
+            .sorted { $0.importance > $1.importance }
+            .prefix(5)
+            .map { story in
+                WidgetStory(
+                    id: story.id,
+                    title: story.title,
+                    category: story.category.rawValue,
+                    categoryIcon: story.category.icon,
+                    importance: story.importance
+                )
+            }
+
+        let widgetData = WidgetIssueData(
+            issueNumber: issue.metadata.issueNumber,
+            weekEnd: issue.metadata.weekEnd,
+            totalStories: issue.metadata.totalStories,
+            topStories: Array(stories),
+            updatedAt: Date()
+        )
+
+        WidgetDataStore.save(widgetData)
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }
