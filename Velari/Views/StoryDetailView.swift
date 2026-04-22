@@ -1,3 +1,4 @@
+import StoreKit
 import SwiftUI
 
 struct StoryDetailView: View {
@@ -8,6 +9,8 @@ struct StoryDetailView: View {
 
     @State private var safariURL: IdentifiableURL?
     @State private var isBookmarked: Bool = false
+    @Environment(\.requestReview) private var requestReview
+    @AppStorage("content_font_size") private var contentFontSize: String = "large"
 
     var body: some View {
         ScrollView {
@@ -24,10 +27,15 @@ struct StoryDetailView: View {
                     .font(.title2)
                     .fontWeight(.bold)
 
-                // Date
-                Text(DateFormatting.displayDate(story.datePublished))
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                // Date + reading time
+                HStack(spacing: 6) {
+                    Text(DateFormatting.displayDate(story.datePublished))
+                    Text("·")
+                    Label("\(story.readingTimeMinutes) min read", systemImage: "clock")
+                        .labelStyle(.titleAndIcon)
+                }
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
 
                 Divider()
 
@@ -35,6 +43,7 @@ struct StoryDetailView: View {
                 Text(story.cleanSummary)
                     .font(.body)
                     .lineSpacing(4)
+                    .dynamicTypeSize(dynamicTypeSize)
 
                 // Sources
                 if !story.sources.isEmpty {
@@ -104,6 +113,7 @@ struct StoryDetailView: View {
         .onAppear {
             isBookmarked = cache.isBookmarked(storyId: story.id)
             cache.markAsRead(storyId: story.id, issueDate: issueDate)
+            ReviewRequestService.registerReadAndMaybePrompt(request: requestReview)
         }
     }
 
@@ -133,6 +143,15 @@ struct StoryDetailView: View {
     private var shareText: String {
         let url = story.sources.first?.url ?? ""
         return "\(story.title)\n\nRead more: \(url)\n\nShared via Velari - AI News Digest"
+    }
+
+    private var dynamicTypeSize: DynamicTypeSize {
+        switch contentFontSize {
+        case "small": .small
+        case "medium": .medium
+        case "xLarge": .xLarge
+        default: .large
+        }
     }
 }
 

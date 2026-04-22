@@ -32,15 +32,7 @@ enum BackgroundRefreshService {
 
                 if index.latest != storedLatest {
                     UserDefaults.standard.set(index.latest, forKey: "lastKnownLatest")
-
-                    // Also pre-fetch and cache the new issue
-                    let issue = try await NetworkService.fetchLatestIssue()
-
-                    // Fire local notification (respects enabled flag internally)
-                    NotificationService.scheduleNewIssueNotification(
-                        storyCount: issue.metadata.totalStories,
-                        sourceCount: issue.metadata.totalSourcesConsulted
-                    )
+                    _ = try await NetworkService.fetchLatestIssue()
                 }
 
                 task.setTaskCompleted(success: true)

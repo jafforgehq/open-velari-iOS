@@ -200,6 +200,17 @@ final class CacheService {
         try? modelContext.save()
     }
 
+    func markAsUnread(storyId: String) {
+        let descriptor = FetchDescriptor<ReadStoryRecord>(
+            predicate: #Predicate { $0.storyId == storyId }
+        )
+        guard let records = try? modelContext.fetch(descriptor) else { return }
+        for record in records {
+            modelContext.delete(record)
+        }
+        try? modelContext.save()
+    }
+
     func isRead(storyId: String) -> Bool {
         let descriptor = FetchDescriptor<ReadStoryRecord>(
             predicate: #Predicate { $0.storyId == storyId }

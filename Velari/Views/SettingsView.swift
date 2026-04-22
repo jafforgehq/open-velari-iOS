@@ -4,6 +4,7 @@ struct SettingsView: View {
     let cache: CacheService
     @AppStorage("theme") private var theme = "system"
     @AppStorage("notifications_enabled") private var notificationsEnabled = true
+    @AppStorage("content_font_size") private var contentFontSize = "large"
     @State private var viewModel: SettingsViewModel?
     @State private var systemPermissionGranted = true
     @Environment(\.dismiss) private var dismiss
@@ -12,6 +13,7 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 appearanceSection
+                readingSection
                 notificationsSection
                 dataSection
                 aboutSection
@@ -46,6 +48,22 @@ struct SettingsView: View {
         }
     }
 
+    private var readingSection: some View {
+        Section {
+            Picker("Text Size", selection: $contentFontSize) {
+                Text("S").tag("small")
+                Text("M").tag("medium")
+                Text("L").tag("large")
+                Text("XL").tag("xLarge")
+            }
+            .pickerStyle(.segmented)
+        } header: {
+            Text("Reading")
+        } footer: {
+            Text("Adjusts the summary text size in story detail.")
+        }
+    }
+
     private var notificationsSection: some View {
         Section {
             Toggle("New issue alerts", isOn: $notificationsEnabled)
@@ -54,12 +72,14 @@ struct SettingsView: View {
                         Task {
                             let granted = await NotificationService.requestPermission()
                             systemPermissionGranted = granted
-                            if !granted {
+                            if granted {
+                                NotificationService.scheduleWeeklyReminder()
+                            } else {
                                 notificationsEnabled = false
                             }
                         }
                     } else {
-                        NotificationService.removeAllPending()
+                        NotificationService.cancelWeeklyReminder()
                     }
                 }
 

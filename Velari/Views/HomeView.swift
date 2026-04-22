@@ -43,6 +43,11 @@ struct HomeView: View {
         .onChange(of: viewModel?.currentIssue?.stories) {
             syncBookmarkedIDs()
         }
+        .onChange(of: selectedStory) { _, newValue in
+            if newValue == nil {
+                syncBookmarkedIDs()
+            }
+        }
     }
 
     @ViewBuilder
@@ -55,7 +60,7 @@ struct HomeView: View {
                     DisclaimerBanner()
 
                     // Issue header
-                    issueHeader(issue.metadata)
+                    issueHeader(issue)
                         .padding(.horizontal)
                         .padding(.top, 12)
 
@@ -83,6 +88,15 @@ struct HomeView: View {
                                 onTap: { selectedStory = story },
                                 onBookmarkTap: {
                                     vm.toggleBookmark(story: story)
+                                },
+                                onToggleRead: {
+                                    HapticService.bookmarkToggle()
+                                    if readStoryIDs.contains(story.id) {
+                                        repository.cache.markAsUnread(storyId: story.id)
+                                    } else {
+                                        repository.cache.markAsRead(storyId: story.id, issueDate: issue.metadata.weekEnd)
+                                    }
+                                    syncBookmarkedIDs()
                                 }
                             )
                         }
@@ -122,8 +136,12 @@ struct HomeView: View {
         }
     }
 
-    private func issueHeader(_ metadata: IssueMetadata) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+    private func issueHeader(_ issue: Issue) -> some View {
+        let metadata = issue.metadata
+        let total = issue.stories.count
+        let readCount = issue.stories.filter { readStoryIDs.contains($0.id) }.count
+
+        return VStack(alignment: .leading, spacing: 8) {
             Text(DateFormatting.weekRange(start: metadata.weekStart, end: metadata.weekEnd))
                 .font(.subheadline)
                 .fontWeight(.semibold)
@@ -131,6 +149,18 @@ struct HomeView: View {
             Text("\(metadata.totalStories) stories from \(metadata.totalSourcesConsulted) sources")
                 .font(.caption)
                 .foregroundStyle(.secondary)
+
+            if total > 0 {
+                HStack(spacing: 8) {
+                    ProgressView(value: Double(readCount), total: Double(total))
+                        .tint(VelariColors.primary)
+                    Text("\(readCount)/\(total) read")
+                        .font(.caption2)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.secondary)
+                        .monospacedDigit()
+                }
+            }
         }
     }
 

@@ -58,18 +58,68 @@ struct VelariWidgetEntryView: View {
     var entry: VelariEntry
 
     var body: some View {
+        switch family {
+        case .systemSmall:
+            if entry.isPlaceholder { placeholderView } else { smallView }
+        case .systemMedium:
+            if entry.isPlaceholder { placeholderView } else { mediumView }
+        case .systemLarge:
+            if entry.isPlaceholder { placeholderView } else { largeView }
+        case .accessoryCircular:
+            accessoryCircularView
+        case .accessoryRectangular:
+            accessoryRectangularView
+        case .accessoryInline:
+            accessoryInlineView
+        default:
+            if entry.isPlaceholder { placeholderView } else { smallView }
+        }
+    }
+
+    // MARK: - Accessory (Lock Screen / StandBy)
+
+    private var accessoryInlineView: some View {
         if entry.isPlaceholder {
-            placeholderView
+            Text("Velari — Open app to sync")
         } else {
-            switch family {
-            case .systemSmall:
-                smallView
-            case .systemMedium:
-                mediumView
-            case .systemLarge:
-                largeView
-            default:
-                smallView
+            Text("Velari #\(entry.issueNumber) — \(entry.totalStories) stories")
+        }
+    }
+
+    private var accessoryCircularView: some View {
+        ZStack {
+            AccessoryWidgetBackground()
+            VStack(spacing: 0) {
+                Image(systemName: "newspaper.fill")
+                    .font(.caption2)
+                Text("\(entry.totalStories)")
+                    .font(.system(.title3, design: .rounded))
+                    .fontWeight(.bold)
+                    .minimumScaleFactor(0.5)
+            }
+            .widgetAccentable()
+        }
+    }
+
+    private var accessoryRectangularView: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 4) {
+                Image(systemName: "newspaper.fill")
+                    .font(.caption2)
+                Text(entry.issueNumber > 0 ? "VELARI #\(entry.issueNumber)" : "VELARI")
+                    .font(.caption2)
+                    .fontWeight(.bold)
+            }
+            .widgetAccentable()
+            if entry.isPlaceholder {
+                Text("Open the app to load this week's digest.")
+                    .font(.caption2)
+                    .lineLimit(2)
+            } else if let story = entry.stories.first {
+                Text(story.title)
+                    .font(.caption2)
+                    .fontWeight(.medium)
+                    .lineLimit(2)
             }
         }
     }
@@ -232,7 +282,14 @@ struct VelariWidget: Widget {
         }
         .configurationDisplayName("Velari Digest")
         .description("This week's top AI news stories at a glance.")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .supportedFamilies([
+            .systemSmall,
+            .systemMedium,
+            .systemLarge,
+            .accessoryCircular,
+            .accessoryRectangular,
+            .accessoryInline
+        ])
     }
 }
 

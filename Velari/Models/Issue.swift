@@ -32,6 +32,11 @@ struct Story: Codable, Identifiable, Hashable, Sendable {
     var cleanSummary: String {
         summary.strippedOfCiteTags
     }
+
+    var readingTimeMinutes: Int {
+        let words = cleanSummary.split(whereSeparator: { $0.isWhitespace || $0.isNewline }).count
+        return max(1, Int(ceil(Double(words) / 200.0)))
+    }
 }
 
 struct Source: Codable, Hashable, Sendable {

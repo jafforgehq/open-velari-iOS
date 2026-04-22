@@ -19,6 +19,7 @@ struct VelariApp: App {
                 .preferredColorScheme(colorScheme)
                 .onAppear {
                     BackgroundRefreshService.scheduleRefresh()
+                    NotificationService.scheduleWeeklyReminder()
                     NotificationService.clearBadge()
                 }
         }

@@ -94,6 +94,15 @@ struct IssueView: View {
                                     onTap: { selectedStory = story },
                                     onBookmarkTap: {
                                         repository.cache.toggleBookmark(story: story, issueDate: issue.metadata.weekEnd)
+                                    },
+                                    onToggleRead: {
+                                        HapticService.bookmarkToggle()
+                                        if readStoryIDs.contains(story.id) {
+                                            repository.cache.markAsUnread(storyId: story.id)
+                                        } else {
+                                            repository.cache.markAsRead(storyId: story.id, issueDate: issue.metadata.weekEnd)
+                                        }
+                                        syncBookmarkedIDs()
                                     }
                                 )
                             }
@@ -126,6 +135,11 @@ struct IssueView: View {
             issue = await repository.loadIssue(date: date)
             isLoading = false
             syncBookmarkedIDs()
+        }
+        .onChange(of: selectedStory) { _, newValue in
+            if newValue == nil {
+                syncBookmarkedIDs()
+            }
         }
     }
 

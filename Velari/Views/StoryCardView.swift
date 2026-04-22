@@ -7,6 +7,7 @@ struct StoryCardView: View {
     @Binding var isBookmarked: Bool
     var onTap: () -> Void
     var onBookmarkTap: () -> Void
+    var onToggleRead: () -> Void = {}
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -17,9 +18,13 @@ struct StoryCardView: View {
                     ImportanceBadge(importance: story.importance)
                     CategoryPill(category: story.category)
                     Spacer()
-                    Text(DateFormatting.relativeDate(story.datePublished))
-                        .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                    HStack(spacing: 4) {
+                        Text(DateFormatting.relativeDate(story.datePublished))
+                        Text("·")
+                        Text("\(story.readingTimeMinutes) min read")
+                    }
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
                 }
 
                 // Title
@@ -100,6 +105,35 @@ struct StoryCardView: View {
         .background(Color(.secondarySystemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .opacity(isRead ? 0.75 : 1.0)
+        .contextMenu {
+            Button {
+                HapticService.bookmarkToggle()
+                isBookmarked.toggle()
+                onBookmarkTap()
+            } label: {
+                Label(
+                    isBookmarked ? "Remove Bookmark" : "Bookmark",
+                    systemImage: isBookmarked ? "bookmark.slash" : "bookmark"
+                )
+            }
+
+            Button {
+                onToggleRead()
+            } label: {
+                Label(
+                    isRead ? "Mark as Unread" : "Mark as Read",
+                    systemImage: isRead ? "circle" : "checkmark.circle"
+                )
+            }
+
+            ShareLink(
+                item: shareText,
+                subject: Text(story.title),
+                message: Text(story.cleanSummary)
+            ) {
+                Label("Share", systemImage: "square.and.arrow.up")
+            }
+        }
     }
 
     private var shareText: String {
